@@ -1,0 +1,6 @@
+{
+  "name": "Parnumation to MIDI Converter",
+  "description": "Konverter notasi angka Parnumation ke file MIDI dengan dukungan SATB, transpose nada dasar, ekstraksi dokumen, validasi visual, dan audio synth player.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
