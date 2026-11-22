@@ -1,0 +1,145 @@
+import subprocess
+
+svg_content = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0C0E"/>
+      <stop offset="60%" stop-color="#121318"/>
+      <stop offset="100%" stop-color="#181A22"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C5A059"/>
+      <stop offset="100%" stop-color="#E5C17D"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#191B22"/>
+      <stop offset="100%" stop-color="#131419"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Decorative musical waveform / bars -->
+  <g opacity="0.18">
+    <rect x="780" y="80" width="8" height="90" rx="4" fill="#C5A059"/>
+    <rect x="800" y="50" width="8" height="150" rx="4" fill="#C5A059"/>
+    <rect x="820" y="70" width="8" height="110" rx="4" fill="#C5A059"/>
+    <rect x="840" y="40" width="8" height="170" rx="4" fill="#C5A059"/>
+    <rect x="860" y="90" width="8" height="70" rx="4" fill="#C5A059"/>
+    <rect x="880" y="60" width="8" height="130" rx="4" fill="#C5A059"/>
+    <rect x="900" y="75" width="8" height="100" rx="4" fill="#C5A059"/>
+    <rect x="920" y="30" width="8" height="190" rx="4" fill="#C5A059"/>
+    <rect x="940" y="65" width="8" height="120" rx="4" fill="#C5A059"/>
+    <rect x="960" y="85" width="8" height="80" rx="4" fill="#C5A059"/>
+    <rect x="980" y="45" width="8" height="160" rx="4" fill="#C5A059"/>
+    <rect x="1000" y="70" width="8" height="110" rx="4" fill="#C5A059"/>
+    <rect x="1020" y="55" width="8" height="140" rx="4" fill="#C5A059"/>
+    <rect x="1040" y="80" width="8" height="90" rx="4" fill="#C5A059"/>
+    <rect x="1060" y="60" width="8" height="130" rx="4" fill="#C5A059"/>
+    <rect x="1080" y="90" width="8" height="70" rx="4" fill="#C5A059"/>
+  </g>
+
+  <!-- Left Content Block -->
+  <g transform="translate(100, 100)">
+    <!-- Badge -->
+    <rect x="0" y="0" width="220" height="34" rx="17" fill="#1C1E26" stroke="#2B2D38" stroke-width="1"/>
+    <circle cx="17" cy="17" r="5" fill="#C5A059"/>
+    <text x="32" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" fill="#E5C17D" letter-spacing="1">PARNUMATION TO MIDI</text>
+
+    <!-- Main Title -->
+    <text x="0" y="95" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">
+      Notasi Angka ke MIDI
+    </text>
+    <text x="0" y="150" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="800" fill="url(#goldGrad)" letter-spacing="-1">
+      Converter Studio
+    </text>
+
+    <!-- Subtitle / Value Prop -->
+    <text x="0" y="205" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#9CA3AF">
+      Konversi partitur paduan suara SATB, transpose nada dasar, ekstraksi dokumen,
+    </text>
+    <text x="0" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#9CA3AF">
+      dan visualizer timeline interaktif dengan audio synthesizer.
+    </text>
+
+    <!-- Feature tags -->
+    <g transform="translate(0, 275)">
+      <!-- SATB Voice Tag -->
+      <rect x="0" y="0" width="145" height="36" rx="8" fill="#16181F" stroke="#262833" stroke-width="1"/>
+      <text x="14" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#E5E7EB">SATB 4-Voice</text>
+
+      <!-- Transpose Tag -->
+      <rect x="160" y="0" width="165" height="36" rx="8" fill="#16181F" stroke="#262833" stroke-width="1"/>
+      <text x="174" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#E5E7EB">Key Transpose</text>
+
+      <!-- DOCX/PDF Extract -->
+      <rect x="340" y="0" width="180" height="36" rx="8" fill="#16181F" stroke="#262833" stroke-width="1"/>
+      <text x="354" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#E5E7EB">DOCX • PDF • TXT</text>
+
+      <!-- MIDI Export -->
+      <rect x="535" y="0" width="170" height="36" rx="8" fill="#16181F" stroke="#262833" stroke-width="1"/>
+      <text x="549" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#E5E7EB">Standard MIDI .mid</text>
+    </g>
+
+    <!-- Solfège notation preview pill -->
+    <g transform="translate(0, 345)">
+      <rect x="0" y="0" width="460" height="42" rx="10" fill="#181A22" stroke="#2A2D3A" stroke-width="1"/>
+      <text x="20" y="27" font-family="monospace, Courier, sans-serif" font-size="16" font-weight="700" fill="#C5A059">1 . 3 5 | i . 7 5 | 6 . 5 . | 3 . . 0 ||</text>
+    </g>
+  </g>
+
+  <!-- Right Visual Preview Card -->
+  <g transform="translate(800, 260)">
+    <rect width="320" height="250" rx="16" fill="url(#cardGrad)" stroke="#262833" stroke-width="1"/>
+    
+    <!-- Mini DAW Track Mockup -->
+    <rect x="20" y="20" width="280" height="42" rx="8" fill="#1B1D25"/>
+    <text x="32" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#3B82F6">SOPRANO</text>
+    <rect x="110" y="32" width="40" height="18" rx="4" fill="#3B82F6" opacity="0.8"/>
+    <rect x="155" y="32" width="60" height="18" rx="4" fill="#3B82F6" opacity="0.8"/>
+    <rect x="220" y="32" width="30" height="18" rx="4" fill="#3B82F6" opacity="0.8"/>
+
+    <rect x="20" y="72" width="280" height="42" rx="8" fill="#1B1D25"/>
+    <text x="32" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#10B981">ALTO</text>
+    <rect x="110" y="84" width="55" height="18" rx="4" fill="#10B981" opacity="0.8"/>
+    <rect x="170" y="84" width="35" height="18" rx="4" fill="#10B981" opacity="0.8"/>
+    <rect x="210" y="84" width="50" height="18" rx="4" fill="#10B981" opacity="0.8"/>
+
+    <rect x="20" y="124" width="280" height="42" rx="8" fill="#1B1D25"/>
+    <text x="32" y="150" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#F59E0B">TENOR</text>
+    <rect x="110" y="136" width="35" height="18" rx="4" fill="#F59E0B" opacity="0.8"/>
+    <rect x="150" y="136" width="45" height="18" rx="4" fill="#F59E0B" opacity="0.8"/>
+    <rect x="200" y="136" width="70" height="18" rx="4" fill="#F59E0B" opacity="0.8"/>
+
+    <rect x="20" y="176" width="280" height="42" rx="8" fill="#1B1D25"/>
+    <text x="32" y="202" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#EF4444">BASS</text>
+    <rect x="110" y="188" width="70" height="18" rx="4" fill="#EF4444" opacity="0.8"/>
+    <rect x="185" y="188" width="40" height="18" rx="4" fill="#EF4444" opacity="0.8"/>
+    <rect x="230" y="188" width="45" height="18" rx="4" fill="#EF4444" opacity="0.8"/>
+  </g>
+</svg>"""
+
+with open('/frontend/public/og-image.svg', 'w') as f:
+    f.write(svg_content)
+with open('/public/og-image.svg', 'w') as f:
+    f.write(svg_content)
+
+# Render PNG via imagemagick convert
+subprocess.run(['convert', '-density', '150', '/frontend/public/og-image.svg', '/frontend/public/og-image.png'], check=True)
+subprocess.run(['cp', '/frontend/public/og-image.png', '/public/og-image.png'], check=True)
+print("Successfully generated og-image.svg and og-image.png at 1200x630")

@@ -109,24 +109,24 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-[#0D0D0D] border border-[#2A2A2A] rounded-xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 animate-fadeIn">
+      <div data-ui="modal" className="bg-[#131417] rounded-xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Modal Header */}
-        <div className="p-4 sm:px-6 sm:py-4 border-b border-[#222] flex items-center justify-between bg-[#111111] flex-none">
+        <div className="p-4 sm:px-6 sm:py-4 flex items-center justify-between bg-[#0B0C0E] flex-none">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-[#C5A059]/15 border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059]">
+            <div className="w-8 h-8 rounded-lg bg-[#2A2314] flex items-center justify-center text-[#E0B86C]">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-base font-semibold text-white font-serif tracking-wide">
-                  NOT GENERATOR &amp; SOLFÈGE CALCULATOR
+                  Not Generator &amp; Solfège Calculator
                 </h2>
-                <span className="bg-[#C5A059]/20 text-[#C5A059] border border-[#C5A059]/40 text-[10px] font-mono uppercase px-2 py-0.5 rounded font-bold">
+                <span className="bg-[#2A2314] text-[#E0B86C] text-xs px-2.5 py-0.5 rounded font-medium">
                   Do = {selectedRootKey}
                 </span>
               </div>
-              <p className="text-[11px] text-[#888]">
+              <p className="text-xs text-[#9CA3AF]">
                 Konversi instan Not Balok (Pitch) &harr; Not Angka (Solfège), Tangga Nada Kromatis, dan Generator Pola
               </p>
             </div>
@@ -134,7 +134,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#888] hover:text-white hover:bg-[#222] transition"
+            className="p-1.5 rounded-md text-[#9CA3AF] hover:text-white hover:bg-[#20222A] transition-colors"
             aria-label="Tutup modal"
           >
             <X className="w-5 h-5" />
@@ -142,10 +142,10 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
         </div>
 
         {/* Global Root Key (Do = ...) Selector Bar */}
-        <div className="bg-[#141414] border-b border-[#222] px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2.5 flex-none">
+        <div className="bg-[#141519] px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2.5 flex-none">
           <div className="flex items-center space-x-2">
             <Key className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span className="text-xs uppercase font-bold text-[#AAA] tracking-wider">
+            <span className="text-xs font-medium text-[#9CA3AF]">
               Pilih Nada Dasar (Do =):
             </span>
           </div>
@@ -155,10 +155,10 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
               <button
                 key={k}
                 onClick={() => setSelectedRootKey(k)}
-                className={`px-2.5 py-1 rounded text-xs font-mono font-bold transition ${
+                className={`px-2.5 py-1 rounded text-xs tabular-nums font-medium transition ${
                   selectedRootKey.toUpperCase() === k.toUpperCase()
-                    ? 'bg-[#C5A059] text-black shadow-md shadow-[#C5A059]/20'
-                    : 'bg-[#1C1C1C] text-[#888] hover:text-white hover:bg-[#282828] border border-[#2A2A2A]'
+                    ? 'bg-[#C5A059] text-black font-semibold'
+                    : 'bg-[#1C1D23] text-[#9CA3AF] hover:text-white hover:bg-[#252730]'
                 }`}
               >
                 {k}
@@ -168,49 +168,49 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex border-b border-[#222] bg-[#0F0F0F] px-4 sm:px-6 overflow-x-auto flex-none">
+        <div className="flex bg-[#0E0F12] p-2 px-4 sm:px-6 overflow-x-auto gap-1.5 flex-none">
           <button
             onClick={() => setActiveTab('pitch-to-solfege')}
-            className={`flex items-center space-x-2 py-3 px-3.5 text-xs font-medium border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center space-x-2 py-2 px-3.5 text-xs rounded-md transition whitespace-nowrap ${
               activeTab === 'pitch-to-solfege'
-                ? 'border-[#C5A059] text-[#C5A059] bg-[#C5A059]/5 font-semibold'
-                : 'border-transparent text-[#888] hover:text-[#E0E0E0]'
+                ? 'bg-[#C5A059] text-black font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#E5E7EB] hover:bg-[#1C1D23]'
             }`}
           >
             <ArrowRightLeft className="w-3.5 h-3.5" />
-            <span>Not Balok &rarr; Not Angka (Misal C# di Do=F)</span>
+            <span>Not Balok &rarr; Not Angka</span>
           </button>
 
           <button
             onClick={() => setActiveTab('solfege-to-pitch')}
-            className={`flex items-center space-x-2 py-3 px-3.5 text-xs font-medium border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center space-x-2 py-2 px-3.5 text-xs rounded-md transition whitespace-nowrap ${
               activeTab === 'solfege-to-pitch'
-                ? 'border-[#C5A059] text-[#C5A059] bg-[#C5A059]/5 font-semibold'
-                : 'border-transparent text-[#888] hover:text-[#E0E0E0]'
+                ? 'bg-[#C5A059] text-black font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#E5E7EB] hover:bg-[#1C1D23]'
             }`}
           >
             <Music className="w-3.5 h-3.5" />
-            <span>Not Angka &rarr; Not Balok (Misal Re di Do=F)</span>
+            <span>Not Angka &rarr; Not Balok</span>
           </button>
 
           <button
             onClick={() => setActiveTab('scale-matrix')}
-            className={`flex items-center space-x-2 py-3 px-3.5 text-xs font-medium border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center space-x-2 py-2 px-3.5 text-xs rounded-md transition whitespace-nowrap ${
               activeTab === 'scale-matrix'
-                ? 'border-[#C5A059] text-[#C5A059] bg-[#C5A059]/5 font-semibold'
-                : 'border-transparent text-[#888] hover:text-[#E0E0E0]'
+                ? 'bg-[#C5A059] text-black font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#E5E7EB] hover:bg-[#1C1D23]'
             }`}
           >
             <Table className="w-3.5 h-3.5" />
-            <span>Tabel Matriks 12 Nada (Do = {selectedRootKey})</span>
+            <span>Tabel Matriks 12 Nada</span>
           </button>
 
           <button
             onClick={() => setActiveTab('patterns')}
-            className={`flex items-center space-x-2 py-3 px-3.5 text-xs font-medium border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center space-x-2 py-2 px-3.5 text-xs rounded-md transition whitespace-nowrap ${
               activeTab === 'patterns'
-                ? 'border-[#C5A059] text-[#C5A059] bg-[#C5A059]/5 font-semibold'
-                : 'border-transparent text-[#888] hover:text-[#E0E0E0]'
+                ? 'bg-[#C5A059] text-black font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#E5E7EB] hover:bg-[#1C1D23]'
             }`}
           >
             <Wand2 className="w-3.5 h-3.5" />
@@ -222,7 +222,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
           {/* Notification feedback */}
           {insertedFeedback && (
-            <div className="bg-[#1A150A] border border-[#C5A059] rounded-lg p-2.5 text-xs text-[#C5A059] flex items-center justify-between animate-fadeIn">
+            <div className="bg-[#1A150A] rounded-lg p-2.5 text-xs text-[#E0B86C] flex items-center justify-between">
               <span className="flex items-center space-x-2">
                 <Check className="w-4 h-4" />
                 <span>Berhasil menyisipkan <strong>{insertedFeedback}</strong> ke editor partitur!</span>
@@ -236,13 +236,13 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
           {activeTab === 'pitch-to-solfege' && (
             <div className="space-y-6">
               {/* Context Explanation */}
-              <div className="bg-[#141414] border border-[#222] rounded-lg p-4 flex items-start space-x-3">
+              <div className="bg-[#18191E] rounded-lg p-4 flex items-start space-x-3">
                 <Info className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-[#AAA] space-y-1">
+                <div className="text-xs text-[#9CA3AF] space-y-1">
                   <p>
                     <strong className="text-white">Pertanyaan Contoh:</strong> &quot;Not <strong>C#</strong> itu not angka apa jika <strong>Do = {selectedRootKey}</strong>?&quot;
                   </p>
-                  <p className="text-[11px] text-[#777]">
+                  <p className="text-[11px] text-[#6B7280]">
                     Pilih nama not balok mutlak di bawah untuk mengetahui angka solfège, tanda kres/mol, dan simbol keyboard Parnumation.
                   </p>
                 </div>
@@ -250,7 +250,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
               {/* Interactive Pitch Selector Keyboard */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#888]">
+                <label className="block text-xs font-semibold text-[#D1D5DB]">
                   1. Pilih Not Balok / Pitch:
                 </label>
                 <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-1.5">
@@ -264,17 +264,17 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                           const { midi } = calculateMidiAndFreq(p.semitone, pitchOctave);
                           audioPlayer.playSingleTone(midi);
                         }}
-                        className={`p-2.5 rounded-lg text-center flex flex-col items-center justify-center transition border ${
+                        className={`p-2.5 rounded-lg text-center flex flex-col items-center justify-center transition ${
                           isSelected
-                            ? 'bg-[#C5A059] text-black border-[#C5A059] font-bold shadow-lg shadow-[#C5A059]/20 scale-105 z-10'
+                            ? 'bg-[#C5A059] text-black font-bold scale-105 z-10'
                             : p.isSharpOrFlat
-                            ? 'bg-[#181818] hover:bg-[#242424] text-[#E0E0E0] border-[#2A2A2A]'
-                            : 'bg-[#1F1F1F] hover:bg-[#2B2B2B] text-white border-[#333]'
+                            ? 'bg-[#18191E] hover:bg-[#22242B] text-[#E0E0E0]'
+                            : 'bg-[#1E2026] hover:bg-[#282B33] text-white'
                         }`}
                       >
-                        <span className="text-sm font-mono font-bold">{p.name}</span>
+                        <span className="text-sm font-bold">{p.name}</span>
                         {p.isSharpOrFlat && (
-                          <span className={`text-[9px] font-mono ${isSelected ? 'text-black/70' : 'text-[#777]'}`}>
+                          <span className={`text-[10px] ${isSelected ? 'text-black/70' : 'text-[#6B7280]'}`}>
                             {p.enharmonic}
                           </span>
                         )}
@@ -284,16 +284,16 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                 </div>
 
                 {/* Octave Selector */}
-                <div className="flex items-center space-x-2 pt-2 text-xs text-[#888]">
+                <div className="flex items-center space-x-2 pt-2 text-xs text-[#9CA3AF]">
                   <span>Pilih Oktaf:</span>
                   {[3, 4, 5].map((oct) => (
                     <button
                       key={oct}
                       onClick={() => setPitchOctave(oct)}
-                      className={`px-2.5 py-0.5 rounded text-xs font-mono transition ${
+                      className={`px-2.5 py-1 rounded text-xs tabular-nums transition ${
                         pitchOctave === oct
                           ? 'bg-[#C5A059] text-black font-bold'
-                          : 'bg-[#1C1C1C] text-[#888] hover:text-white'
+                          : 'bg-[#1C1D23] text-[#9CA3AF] hover:text-white'
                       }`}
                     >
                       Oktaf {oct} ({oct === 4 ? 'Tengah' : oct === 3 ? 'Rendah' : 'Tinggi'})
@@ -303,22 +303,22 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
               </div>
 
               {/* Conversion Result Showcase Card */}
-              <div className="bg-gradient-to-br from-[#161616] to-[#111111] border border-[#C5A059]/50 rounded-xl p-5 sm:p-6 space-y-5 shadow-xl">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#2A2A2A] pb-4">
+              <div className="bg-[#18191E] rounded-xl p-5 sm:p-6 space-y-5">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#888]">
+                    <span className="text-xs text-[#9CA3AF] font-medium">
                       Hasil Kalkulasi Notasi
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-serif flex items-center space-x-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-serif flex items-center space-x-2 mt-0.5">
                       <span>Not {pitchToSolfegeResult.pitchName}</span>
-                      <span className="text-sm font-sans font-normal text-[#888]">&bull; Do = {pitchToSolfegeResult.rootKey}</span>
+                      <span className="text-sm font-sans font-normal text-[#9CA3AF]">&bull; Do = {pitchToSolfegeResult.rootKey}</span>
                     </h3>
                   </div>
 
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => audioPlayer.playSingleTone(pitchToSolfegeResult.midiNote)}
-                      className="flex items-center space-x-1.5 bg-[#C5A059] hover:bg-[#E0B86C] text-black font-bold text-xs px-3.5 py-2 rounded-lg transition shadow cursor-pointer"
+                      className="flex items-center space-x-1.5 bg-[#C5A059] hover:bg-[#E0B86C] text-black font-semibold text-xs px-3.5 py-2 rounded-md transition-colors cursor-pointer active:scale-[0.98]"
                       title="Dengarkan Nada Ini"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -330,57 +330,57 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                 {/* Primary Metric Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {/* Metric 1: Not Angka & Solfège */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Not Angka / Solfège</div>
-                    <div className="text-2xl font-bold font-mono text-[#C5A059]">
-                      {pitchToSolfegeResult.parnumation}
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Not Angka / Solfège</div>
+                    <div className="text-2xl font-bold text-[#E0B86C]">
+                      <code>{pitchToSolfegeResult.parnumation}</code>
                     </div>
-                    <div className="text-xs font-semibold text-[#E0E0E0]">
+                    <div className="text-xs font-semibold text-[#E5E7EB]">
                       {pitchToSolfegeResult.solfegeSharp}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       {pitchToSolfegeResult.isDiatonic ? 'Nada Diatonis Utama' : 'Nada Kromatis (Kres/Mol)'}
                     </div>
                   </div>
 
                   {/* Metric 2: Simbol Keyboard Parnumation */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Simbol Keyboard Parnumation</div>
-                    <div className="text-xl font-bold font-mono text-emerald-400">
-                      {pitchToSolfegeResult.parnumation} <span className="text-xs text-[#777] font-normal">(Tengah)</span>
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Simbol Keyboard Parnumation</div>
+                    <div className="text-xl font-bold text-emerald-400">
+                      <code>{pitchToSolfegeResult.parnumation}</code> <span className="text-xs text-[#6B7280] font-normal">(Tengah)</span>
                     </div>
-                    <div className="text-xs font-mono text-[#AAA]">
-                      Tinggi: <span className="text-[#C5A059] font-bold">{pitchToSolfegeResult.parnumationHigh}</span> &bull; Rendah: <span className="text-sky-400 font-bold">{pitchToSolfegeResult.parnumationLow}</span>
+                    <div className="text-xs text-[#9CA3AF]">
+                      Tinggi: <code className="text-[#E0B86C] font-bold">{pitchToSolfegeResult.parnumationHigh}</code> &bull; Rendah: <code className="text-sky-400 font-bold">{pitchToSolfegeResult.parnumationLow}</code>
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Ketik langsung di teks partitur
                     </div>
                   </div>
 
                   {/* Metric 3: Interval dari Do */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Interval dari Tonika (Do)</div>
-                    <div className="text-base font-bold text-white">
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Interval dari Tonika (Do)</div>
+                    <div className="text-base font-bold text-white tabular-nums">
                       +{pitchToSolfegeResult.semitoneOffset} Semitone
                     </div>
-                    <div className="text-xs text-[#AAA] truncate" title={pitchToSolfegeResult.intervalName}>
+                    <div className="text-xs text-[#9CA3AF] truncate" title={pitchToSolfegeResult.intervalName}>
                       {pitchToSolfegeResult.intervalName}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Jarak dari nada {pitchToSolfegeResult.rootKey}
                     </div>
                   </div>
 
                   {/* Metric 4: Detail Akustik & MIDI */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Spesifikasi Akustik</div>
-                    <div className="text-base font-mono font-bold text-sky-400">
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Spesifikasi Akustik</div>
+                    <div className="text-base font-semibold text-sky-400 tabular-nums">
                       {pitchToSolfegeResult.frequencyHz.toFixed(2)} Hz
                     </div>
-                    <div className="text-xs font-mono text-[#AAA]">
+                    <div className="text-xs text-[#9CA3AF] tabular-nums">
                       MIDI Note: #{pitchToSolfegeResult.midiNote}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Enharmonik: {pitchToSolfegeResult.enharmonic}
                     </div>
                   </div>
@@ -388,19 +388,19 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
                 {/* Quick Insert & Copy Actions */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <div className="flex items-center space-x-2 text-xs text-[#888]">
+                  <div className="flex items-center space-x-2 text-xs text-[#9CA3AF]">
                     <span>Aksi Cepat:</span>
                     <button
                       onClick={() => copyToClipboard(pitchToSolfegeResult.parnumation, 'copy-parn')}
-                      className="flex items-center space-x-1 bg-[#1C1C1C] hover:bg-[#282828] border border-[#333] px-3 py-1.5 rounded text-[#E0E0E0] transition"
+                      className="flex items-center space-x-1.5 bg-[#202228] hover:bg-[#282B33] px-3 py-1.5 rounded text-[#E5E7EB] transition"
                     >
                       {copiedKey === 'copy-parn' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-[#C5A059]" />}
-                      <span>Salin Simbol ({pitchToSolfegeResult.parnumation})</span>
+                      <span>Salin Simbol (<code>{pitchToSolfegeResult.parnumation}</code>)</span>
                     </button>
 
                     <button
                       onClick={() => copyToClipboard(`${pitchToSolfegeResult.pitchName} = ${pitchToSolfegeResult.solfegeSharp} (${pitchToSolfegeResult.parnumation}) pada Do = ${pitchToSolfegeResult.rootKey}`, 'copy-full')}
-                      className="flex items-center space-x-1 bg-[#1C1C1C] hover:bg-[#282828] border border-[#333] px-3 py-1.5 rounded text-[#E0E0E0] transition"
+                      className="flex items-center space-x-1.5 bg-[#202228] hover:bg-[#282B33] px-3 py-1.5 rounded text-[#E5E7EB] transition"
                     >
                       {copiedKey === 'copy-full' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>Salin Ringkasan Teks</span>
@@ -427,13 +427,13 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
           {activeTab === 'solfege-to-pitch' && (
             <div className="space-y-6">
               {/* Context Explanation */}
-              <div className="bg-[#141414] border border-[#222] rounded-lg p-4 flex items-start space-x-3">
+              <div className="bg-[#18191E] rounded-lg p-4 flex items-start space-x-3">
                 <Info className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-[#AAA] space-y-1">
+                <div className="text-xs text-[#9CA3AF] space-y-1">
                   <p>
                     <strong className="text-white">Pertanyaan Contoh:</strong> &quot;Not <strong>Re (2)</strong> atau <strong>Sel (/5)</strong> itu nada apa jika <strong>Do = {selectedRootKey}</strong>?&quot;
                   </p>
-                  <p className="text-[11px] text-[#777]">
+                  <p className="text-[11px] text-[#6B7280]">
                     Pilih not angka atau suku kata solfège di bawah untuk melihat nama not balok mutlak, frekuensi Hertz, dan nilai MIDI.
                   </p>
                 </div>
@@ -441,7 +441,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
               {/* Solfège Quick Selector Buttons */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#888]">
+                <label className="block text-xs font-semibold text-[#D1D5DB]">
                   1. Pilih Not Angka / Solfège:
                 </label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
@@ -457,21 +457,21 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                           const { midi } = calculateMidiAndFreq(targetSemi, 4 + solfegeOctaveShift);
                           audioPlayer.playSingleTone(midi);
                         }}
-                        className={`p-3 rounded-lg text-left transition border ${
+                        className={`p-3 rounded-lg text-left transition ${
                           isSelected
-                            ? 'bg-[#C5A059] text-black border-[#C5A059] font-bold shadow-lg shadow-[#C5A059]/20 scale-105 z-10'
+                            ? 'bg-[#C5A059] text-black font-bold scale-105 z-10'
                             : s.isDiatonic
-                            ? 'bg-[#1C1C1C] hover:bg-[#282828] text-white border-[#333]'
-                            : 'bg-[#141414] hover:bg-[#1E1E1E] text-[#AAA] border-[#262626]'
+                            ? 'bg-[#1E2026] hover:bg-[#282B33] text-white'
+                            : 'bg-[#18191E] hover:bg-[#22242B] text-[#9CA3AF]'
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-base font-mono font-bold">{s.parnumationMiddle}</span>
-                          <span className={`text-[10px] font-mono px-1 rounded ${isSelected ? 'bg-black/20 text-black' : s.isDiatonic ? 'text-[#C5A059]' : 'text-[#777]'}`}>
+                          <code className="text-base font-bold">{s.parnumationMiddle}</code>
+                          <span className={`text-[10px] px-1 rounded ${isSelected ? 'bg-black/20 text-black' : s.isDiatonic ? 'text-[#E0B86C]' : 'text-[#6B7280]'}`}>
                             {s.isDiatonic ? 'Diatonis' : 'Kromatis'}
                           </span>
                         </div>
-                        <div className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-black' : 'text-[#E0E0E0]'}`}>
+                        <div className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-black' : 'text-[#E5E7EB]'}`}>
                           {s.solfegeSharp}
                         </div>
                       </button>
@@ -480,7 +480,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                 </div>
 
                 {/* Octave Range Toggle */}
-                <div className="flex items-center space-x-2 pt-2 text-xs text-[#888]">
+                <div className="flex items-center space-x-2 pt-2 text-xs text-[#9CA3AF]">
                   <span>Rentang Oktaf:</span>
                   {[
                     { label: 'Rendah (qwertyu / titik bawah)', val: -1 },
@@ -493,7 +493,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                       className={`px-2.5 py-1 rounded text-xs transition ${
                         solfegeOctaveShift === item.val
                           ? 'bg-[#C5A059] text-black font-bold'
-                          : 'bg-[#1C1C1C] text-[#888] hover:text-white'
+                          : 'bg-[#1C1D23] text-[#9CA3AF] hover:text-white'
                       }`}
                     >
                       {item.label}
@@ -503,22 +503,22 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
               </div>
 
               {/* Result Showcase Card */}
-              <div className="bg-gradient-to-br from-[#161616] to-[#111111] border border-[#C5A059]/50 rounded-xl p-5 sm:p-6 space-y-5 shadow-xl">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#2A2A2A] pb-4">
+              <div className="bg-[#18191E] rounded-xl p-5 sm:p-6 space-y-5">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#888]">
+                    <span className="text-xs text-[#9CA3AF] font-medium">
                       Hasil Not Balok Mutlak
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-serif flex items-center space-x-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-serif flex items-center space-x-2 mt-0.5">
                       <span>Solfège {solfegeToPitchResult.stepInfo.solfegeSharp} ({solfegeToPitchResult.stepInfo.parnumationMiddle})</span>
-                      <span className="text-sm font-sans font-normal text-[#888]">&bull; Do = {solfegeToPitchResult.rootKey}</span>
+                      <span className="text-sm font-sans font-normal text-[#9CA3AF]">&bull; Do = {solfegeToPitchResult.rootKey}</span>
                     </h3>
                   </div>
 
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => audioPlayer.playSingleTone(solfegeToPitchResult.midiNote)}
-                      className="flex items-center space-x-1.5 bg-[#C5A059] hover:bg-[#E0B86C] text-black font-bold text-xs px-3.5 py-2 rounded-lg transition shadow cursor-pointer"
+                      className="flex items-center space-x-1.5 bg-[#C5A059] hover:bg-[#E0B86C] text-black font-semibold text-xs px-3.5 py-2 rounded-md transition-colors cursor-pointer active:scale-[0.98]"
                       title="Dengarkan Nada Ini"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -530,61 +530,63 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                 {/* Metric Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {/* Metric 1: Absolute Pitch */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Not Balok Mutlak (Pitch)</div>
-                    <div className="text-2xl font-bold font-mono text-[#C5A059]">
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Not Balok Mutlak (Pitch)</div>
+                    <div className="text-2xl font-bold text-[#E0B86C]">
                       {solfegeToPitchResult.pitchName}
                     </div>
-                    <div className="text-xs font-semibold text-[#E0E0E0]">
+                    <div className="text-xs font-semibold text-[#E5E7EB]">
                       {solfegeToPitchResult.fullNoteName}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Enharmonik: {solfegeToPitchResult.enharmonic}
                     </div>
                   </div>
 
                   {/* Metric 2: Parnumation Input Key */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Karakter Parnumation</div>
-                    <div className="text-xl font-bold font-mono text-emerald-400">
-                      {solfegeOctaveShift === 1
-                        ? solfegeToPitchResult.stepInfo.parnumationHigh
-                        : solfegeOctaveShift === -1
-                        ? solfegeToPitchResult.stepInfo.parnumationLow
-                        : solfegeToPitchResult.stepInfo.parnumationMiddle}
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Karakter Parnumation</div>
+                    <div className="text-xl font-bold text-emerald-400">
+                      <code>
+                        {solfegeOctaveShift === 1
+                          ? solfegeToPitchResult.stepInfo.parnumationHigh
+                          : solfegeOctaveShift === -1
+                          ? solfegeToPitchResult.stepInfo.parnumationLow
+                          : solfegeToPitchResult.stepInfo.parnumationMiddle}
+                      </code>
                     </div>
-                    <div className="text-xs font-mono text-[#AAA]">
+                    <div className="text-xs text-[#9CA3AF]">
                       {solfegeOctaveShift === 1 ? 'Oktaf Tinggi (!@#$)' : solfegeOctaveShift === -1 ? 'Oktaf Rendah (qwer)' : 'Oktaf Standar (1234)'}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Not Angka: {solfegeToPitchResult.stepInfo.notAngkaNumber}
                     </div>
                   </div>
 
                   {/* Metric 3: Interval */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Interval dari Tonika</div>
-                    <div className="text-base font-bold text-white">
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Interval dari Tonika</div>
+                    <div className="text-base font-bold text-white tabular-nums">
                       +{solfegeToPitchResult.semitoneOffset} Semitone
                     </div>
-                    <div className="text-xs text-[#AAA] truncate">
+                    <div className="text-xs text-[#9CA3AF] truncate">
                       {solfegeToPitchResult.stepInfo.intervalName}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Rasio: {solfegeToPitchResult.stepInfo.intervalRatio}
                     </div>
                   </div>
 
                   {/* Metric 4: Frequency & MIDI */}
-                  <div className="bg-[#0D0D0D] border border-[#262626] rounded-lg p-3.5 space-y-1">
-                    <div className="text-[10px] font-mono uppercase text-[#888]">Frekuensi &amp; MIDI</div>
-                    <div className="text-base font-mono font-bold text-sky-400">
+                  <div className="bg-[#101114] rounded-lg p-3.5 space-y-1">
+                    <div className="text-xs text-[#9CA3AF] font-medium">Frekuensi &amp; MIDI</div>
+                    <div className="text-base font-semibold text-sky-400 tabular-nums">
                       {solfegeToPitchResult.frequencyHz.toFixed(2)} Hz
                     </div>
-                    <div className="text-xs font-mono text-[#AAA]">
+                    <div className="text-xs text-[#9CA3AF] tabular-nums">
                       MIDI Note: #{solfegeToPitchResult.midiNote}
                     </div>
-                    <div className="text-[10px] text-[#707070]">
+                    <div className="text-[11px] text-[#6B7280]">
                       Skala Standard A4 = 440 Hz
                     </div>
                   </div>
@@ -592,11 +594,11 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
                 {/* Quick Insert & Copy Actions */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <div className="flex items-center space-x-2 text-xs text-[#888]">
+                  <div className="flex items-center space-x-2 text-xs text-[#9CA3AF]">
                     <span>Aksi Cepat:</span>
                     <button
                       onClick={() => copyToClipboard(solfegeToPitchResult.pitchName, 'copy-pitch')}
-                      className="flex items-center space-x-1 bg-[#1C1C1C] hover:bg-[#282828] border border-[#333] px-3 py-1.5 rounded text-[#E0E0E0] transition"
+                      className="flex items-center space-x-1.5 bg-[#202228] hover:bg-[#282B33] px-3 py-1.5 rounded text-[#E5E7EB] transition"
                     >
                       {copiedKey === 'copy-pitch' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-[#C5A059]" />}
                       <span>Salin Not ({solfegeToPitchResult.pitchName})</span>
@@ -604,7 +606,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
 
                     <button
                       onClick={() => copyToClipboard(`Jika Do = ${solfegeToPitchResult.rootKey}, maka ${solfegeToPitchResult.stepInfo.solfegeSharp} (${solfegeToPitchResult.stepInfo.parnumationMiddle}) adalah ${solfegeToPitchResult.fullNoteName}`, 'copy-solf-full')}
-                      className="flex items-center space-x-1 bg-[#1C1C1C] hover:bg-[#282828] border border-[#333] px-3 py-1.5 rounded text-[#E0E0E0] transition"
+                      className="flex items-center space-x-1.5 bg-[#202228] hover:bg-[#282B33] px-3 py-1.5 rounded text-[#E5E7EB] transition"
                     >
                       {copiedKey === 'copy-solf-full' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>Salin Kalimat Lengkap</span>
@@ -630,19 +632,19 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
           {/* ============================================================ */}
           {activeTab === 'scale-matrix' && (
             <div className="space-y-4">
-              <div className="flex flex-wrap items-center justify-between text-xs text-[#888] px-1 gap-2">
+              <div className="flex flex-wrap items-center justify-between text-xs text-[#9CA3AF] px-1 gap-2">
                 <span>
-                  Tabel 12 nada kromatis untuk tangga nada <strong>Do = {selectedRootKey}</strong>. Klik baris atau tombol audio untuk mendengar bunyi nadanya.
+                  Tabel 12 nada kromatis untuk tangga nada <strong>Do = {selectedRootKey}</strong>. Klik tombol audio untuk mendengar bunyi nadanya.
                 </span>
-                <span className="font-mono text-[#C5A059] font-bold">
+                <span className="text-[#E0B86C] font-medium">
                   12 Nada Kromatis &bull; A4 = 440 Hz
                 </span>
               </div>
 
-              <div className="overflow-x-auto border border-[#222] rounded-xl bg-[#111111]">
+              <div className="overflow-x-auto rounded-xl bg-[#131417]">
                 <table className="w-full text-left text-xs border-collapse font-sans">
                   <thead>
-                    <tr className="bg-[#161616] border-b border-[#262626] text-[10px] font-mono uppercase tracking-wider text-[#888]">
+                    <tr className="bg-[#1A1B20] text-xs font-semibold text-[#9CA3AF]">
                       <th className="p-3">Solfège</th>
                       <th className="p-3">Not Angka</th>
                       <th className="p-3">Not Balok Mutlak</th>
@@ -652,65 +654,65 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                       <th className="p-3 text-right">Dengar / Aksi</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#1D1D1D]">
+                  <tbody>
                     {chromaticScale.map((item) => {
                       const { step, pitch, midiNote, frequencyHz, fullNoteName } = item;
                       return (
                         <tr
                           key={step.semitoneOffset}
-                          className={`hover:bg-[#1A1A1A] transition ${
+                          className={`hover:bg-[#1E2026] transition ${
                             step.isDiatonic ? 'bg-white/[0.02]' : 'opacity-85'
                           }`}
                         >
                           {/* Solfège */}
                           <td className="p-3 font-semibold">
-                            <span className={step.isDiatonic ? 'text-[#C5A059] font-bold text-sm' : 'text-[#BBB]'}>
+                            <span className={step.isDiatonic ? 'text-[#E0B86C] font-bold text-sm' : 'text-[#D1D5DB]'}>
                               {step.solfegeSharp}
                             </span>
                             {!step.isDiatonic && (
-                              <span className="text-[10px] text-[#666] ml-1.5">
+                              <span className="text-[11px] text-[#6B7280] ml-1.5">
                                 ({step.solfegeFlat})
                               </span>
                             )}
                           </td>
 
                           {/* Not Angka */}
-                          <td className="p-3 font-mono font-bold">
+                          <td className="p-3 font-semibold">
                             <span className={`px-2 py-0.5 rounded ${
                               step.isDiatonic
-                                ? 'bg-[#C5A059]/20 text-[#C5A059] border border-[#C5A059]/30'
-                                : 'bg-[#222] text-[#AAA] border border-[#333]'
+                                ? 'bg-[#2A2314] text-[#E0B86C]'
+                                : 'bg-[#1E2026] text-[#9CA3AF]'
                             }`}>
-                              {step.notAngkaNumber}
+                              <code>{step.notAngkaNumber}</code>
                             </span>
                           </td>
 
                           {/* Not Balok */}
-                          <td className="p-3 font-mono font-bold text-white text-sm">
+                          <td className="p-3 font-semibold text-white text-sm">
                             <span>{pitch.name}</span>
                             {pitch.isSharpOrFlat && (
-                              <span className="text-[11px] font-normal text-[#777] ml-1">
+                              <span className="text-xs font-normal text-[#6B7280] ml-1">
                                 / {pitch.enharmonic}
                               </span>
                             )}
                           </td>
 
                           {/* Parnumation Symbols */}
-                          <td className="p-3 font-mono text-xs">
-                            <span className="text-emerald-400 font-bold">{step.parnumationMiddle}</span>
-                            <span className="text-[#666] mx-1">/</span>
-                            <span className="text-[#C5A059]">{step.parnumationHigh}</span>
-                            <span className="text-[#666] mx-1">/</span>
-                            <span className="text-sky-400">{step.parnumationLow}</span>
+                          <td className="p-3 text-xs">
+                            <code className="text-emerald-400 font-bold">{step.parnumationMiddle}</code>
+                            <span className="text-[#6B7280] mx-1">/</span>
+                            <code className="text-[#E0B86C]">{step.parnumationHigh}</code>
+                            <span className="text-[#6B7280] mx-1">/</span>
+                            <code className="text-sky-400">{step.parnumationLow}</code>
                           </td>
 
                           {/* Interval */}
-                          <td className="p-3 text-[11px] text-[#AAA]">
-                            <span className="font-mono text-[#888]">+{step.semitoneOffset} st</span> &bull; {step.intervalName.split('/')[0]}
+                          <td className="p-3 text-xs text-[#9CA3AF]">
+                            <span className="tabular-nums text-[#D1D5DB]">+{step.semitoneOffset} st</span> &bull; {step.intervalName.split('/')[0]}
                           </td>
 
                           {/* Frequency */}
-                          <td className="p-3 font-mono text-[#AAA]">
+                          <td className="p-3 tabular-nums text-[#9CA3AF]">
                             {frequencyHz.toFixed(1)} Hz
                           </td>
 
@@ -718,7 +720,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                           <td className="p-3 text-right space-x-1.5">
                             <button
                               onClick={() => audioPlayer.playSingleTone(midiNote)}
-                              className="p-1.5 bg-[#1F1F1F] hover:bg-[#C5A059] hover:text-black rounded text-[#C5A059] transition cursor-pointer"
+                              className="p-1.5 bg-[#202228] hover:bg-[#C5A059] hover:text-black rounded text-[#C5A059] transition cursor-pointer"
                               title={`Dengarkan ${fullNoteName}`}
                             >
                               <Volume2 className="w-3.5 h-3.5" />
@@ -727,7 +729,7 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                             {onInsertText && (
                               <button
                                 onClick={() => handleInsert(step.parnumationMiddle, step.parnumationMiddle)}
-                                className="px-2 py-1 bg-[#1F1F1F] hover:bg-[#2A2A2A] text-[#E0E0E0] hover:text-[#C5A059] rounded font-mono text-[10px] transition"
+                                className="px-2 py-1 bg-[#202228] hover:bg-[#282B33] text-[#E0E0E0] hover:text-[#C5A059] rounded text-xs transition"
                                 title="Sisipkan ke Editor"
                               >
                                 + Sisip
@@ -748,11 +750,11 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
           {/* ============================================================ */}
           {activeTab === 'patterns' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between text-xs text-[#888] px-1">
+              <div className="flex items-center justify-between text-xs text-[#9CA3AF] px-1">
                 <span>
                   Pilih pola notasi siap pakai dalam nada dasar <strong>Do = {selectedRootKey}</strong> untuk langsung dimasukkan ke editor.
                 </span>
-                <span className="font-mono text-[#C5A059] font-bold">
+                <span className="text-[#E0B86C] font-semibold tabular-nums">
                   {patterns.length} Template Pola
                 </span>
               </div>
@@ -761,31 +763,31 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
                 {patterns.map((pat, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#121212] border border-[#262626] hover:border-[#3A3A3A] rounded-xl p-4 flex flex-col justify-between space-y-3 transition"
+                    className="bg-[#18191E] rounded-xl p-4 flex flex-col justify-between space-y-3 transition"
                   >
                     <div>
                       <div className="flex items-center justify-between">
                         <h4 className="text-sm font-bold text-white flex items-center space-x-2">
                           <span>{pat.name}</span>
                         </h4>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1C1C1C] text-[#888] border border-[#2A2A2A]">
+                        <span className="text-xs px-2 py-0.5 rounded bg-[#202228] text-[#9CA3AF]">
                           {pat.category}
                         </span>
                       </div>
-                      <p className="text-xs text-[#888] mt-1">
+                      <p className="text-xs text-[#9CA3AF] mt-1">
                         {pat.description}
                       </p>
 
                       {/* Code Snippet Box */}
-                      <pre className="mt-3 p-2.5 bg-[#090909] border border-[#202020] rounded text-xs font-mono text-emerald-400 overflow-x-auto whitespace-pre-wrap">
+                      <pre className="mt-3 p-2.5 bg-[#101114] rounded text-xs font-mono text-emerald-400 overflow-x-auto whitespace-pre-wrap">
                         {pat.parnumationText}
                       </pre>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-[#1C1C1C]">
+                    <div className="flex items-center justify-between pt-2">
                       <button
                         onClick={() => copyToClipboard(pat.parnumationText, `pat-${idx}`)}
-                        className="flex items-center space-x-1 text-xs text-[#888] hover:text-white transition"
+                        className="flex items-center space-x-1.5 text-xs text-[#9CA3AF] hover:text-white transition"
                       >
                         {copiedKey === `pat-${idx}` ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>Salin Teks</span>
@@ -809,15 +811,15 @@ export const NoteGeneratorModal: React.FC<NoteGeneratorModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:px-6 border-t border-[#222] bg-[#0E0E0E] flex flex-wrap items-center justify-between gap-3 flex-none">
-          <div className="text-[11px] text-[#707070] font-mono">
+        <div className="p-4 sm:px-6 bg-[#0B0C0E] flex flex-wrap items-center justify-between gap-3 flex-none">
+          <div className="text-xs text-[#6B7280]">
             Parnumation Engine &bull; Do = {selectedRootKey} (MIDI #{getRootKeySemitone(selectedRootKey) + 60})
           </div>
 
           <div className="flex items-center space-x-2">
             <button
               onClick={onClose}
-              className="px-4 py-1.5 bg-[#1C1C1C] hover:bg-[#282828] text-[#E0E0E0] text-xs rounded transition"
+              className="px-4 py-1.5 bg-[#202228] hover:bg-[#282B33] text-[#E0E0E0] text-xs rounded transition"
             >
               Tutup
             </button>

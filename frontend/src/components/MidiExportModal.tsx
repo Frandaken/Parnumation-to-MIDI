@@ -29,6 +29,7 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
 }) => {
   const [selectedInstrument, setSelectedInstrument] = useState<number>(52); // Default 52 = Choir Aahs
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -43,6 +44,7 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
 
   // Download Full SATB / Multi-track file
   const handleDownloadFull = () => {
+    setErrorMessage(null);
     try {
       const buffer = generateMidiBuffer(song, {
         instrumentOverride: selectedInstrument,
@@ -54,12 +56,13 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
       setTimeout(() => setDownloadSuccess(null), 4000);
     } catch (err: unknown) {
       console.error(err);
-      alert('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
+      setErrorMessage('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
     }
   };
 
   // Download single specific voice
   const handleDownloadVoice = (voice: SATBVoice, voiceName: string) => {
+    setErrorMessage(null);
     try {
       const buffer = generateMidiBuffer(song, {
         instrumentOverride: selectedInstrument,
@@ -71,12 +74,13 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
       setTimeout(() => setDownloadSuccess(null), 4000);
     } catch (err: unknown) {
       console.error(err);
-      alert('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
+      setErrorMessage('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
     }
   };
 
   // Download all voices individually
   const handleDownloadAllSeparate = () => {
+    setErrorMessage(null);
     try {
       song.tracks.forEach((track, idx) => {
         setTimeout(() => {
@@ -92,15 +96,15 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
       setTimeout(() => setDownloadSuccess(null), 4000);
     } catch (err: unknown) {
       console.error(err);
-      alert('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
+      setErrorMessage('Gagal menghasilkan file MIDI: ' + (err instanceof Error ? err.message : String(err)));
     }
   };
 
   const isSatb = song.tracks.length > 1;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-fadeIn">
+      <div data-ui="modal" className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col">
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#222] bg-[#0A0A0A]">
           <div className="flex items-center space-x-2.5">
@@ -124,15 +128,21 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
           </button>
         </div>
 
+        {errorMessage && (
+          <div className="mx-6 mt-4 p-3 rounded bg-red-950/60 border border-red-800 text-xs text-red-200">
+            {errorMessage}
+          </div>
+        )}
+
         {/* Modal Body */}
         <div className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
           {/* Metadata Summary Pill */}
-          <div className="bg-[#141414] p-3.5 rounded border border-[#222] flex items-center justify-between text-xs">
+          <div className="bg-[#141519] p-3.5 rounded-lg flex items-center justify-between text-xs">
             <div>
-              <span className="text-[#666]">Judul: </span>
-              <span className="font-bold text-[#E0E0E0]">{song.metadata.title}</span>
+              <span className="text-[#6B7280]">Judul: </span>
+              <span className="font-semibold text-[#E5E7EB]">{song.metadata.title}</span>
             </div>
-            <div className="flex items-center space-x-3 text-[#888] font-mono">
+            <div className="flex items-center space-x-3 text-[#9CA3AF] tabular-nums">
               <span>Do = <b className="text-[#C5A059]">{song.metadata.key}</b></span>
               <span>{song.metadata.bpm} BPM</span>
               <span>{song.metadata.timeSignature.join('/')}</span>
@@ -141,13 +151,13 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
 
           {/* Instrument Selector */}
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#A0A0A0] mb-1.5">
+            <label className="block text-xs font-medium text-[#9CA3AF] mb-1.5">
               Pilihan Suara Instrumen MIDI (General MIDI):
             </label>
             <select
               value={selectedInstrument}
               onChange={(e) => setSelectedInstrument(parseInt(e.target.value, 10))}
-              className="w-full bg-[#141414] border border-[#2A2A2A] text-[#E0E0E0] text-xs rounded px-3 py-2.5 focus:outline-none focus:border-[#C5A059] font-mono"
+              className="w-full bg-[#1A1B20] text-[#E5E7EB] text-xs rounded-md px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#C5A059]"
             >
               {MIDI_INSTRUMENTS.map((inst) => (
                 <option key={inst.id} value={inst.id} className="bg-[#141414] text-[#E0E0E0]">
@@ -155,48 +165,47 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
                 </option>
               ))}
             </select>
-            <p className="text-[10px] text-[#707070] mt-1">
-              Catatan: Default untuk partitur paduan suara adalah <i>Choir Aahs (#52)</i>.
+            <p className="text-xs text-[#6B7280] mt-1">
+              Catatan: Default untuk partitur paduan suara adalah Choir Aahs (#52).
             </p>
           </div>
 
           {/* Download Options */}
           <div className="space-y-3">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#A0A0A0]">
+            <label className="block text-xs font-medium text-[#9CA3AF]">
               Opsi Ekspor Trek MIDI:
             </label>
 
             {/* Primary Action: Full SATB */}
             <button
               onClick={handleDownloadFull}
-              className="w-full flex items-center justify-between p-4 rounded bg-[#C5A059] hover:bg-[#E0B86C] text-black font-bold transition group"
+              className="w-full flex items-center justify-between p-4 rounded-lg bg-[#C5A059] hover:bg-[#E0B86C] text-black font-semibold transition group active:scale-[0.98]"
             >
               <div className="flex items-center space-x-3 text-left">
                 <div className="h-10 w-10 rounded bg-black/10 flex items-center justify-center text-black">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs uppercase tracking-wider text-black">
+                  <div className="font-semibold text-xs text-black">
                     {isSatb ? 'Download Full SATB (Semua 4 Trek)' : 'Download File MIDI (.mid)'}
                   </div>
-                  <div className="text-[11px] text-black/75 font-medium">
+                  <div className="text-xs text-black/75 font-normal">
                     {isSatb
                       ? 'Format Type 1 Multi-track (Soprano, Alto, Tenor, Bass tergabung)'
                       : 'Format Standard Type 0 Single Track'}
                   </div>
                 </div>
               </div>
-              <Download className="w-5 h-5 text-black group-hover:translate-x-0.5 transition" />
+              <Download className="w-5 h-5 text-black group-hover:translate-x-0.5 transition-transform" />
             </button>
 
-            {/* Individual Voice Tracks if SATB exists */}
             {isSatb && (
               <div className="pt-2 space-y-2">
-                <div className="flex items-center justify-between text-xs text-[#888]">
+                <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
                   <span>Atau unduh satu per satu suara spesifik:</span>
                   <button
                     onClick={handleDownloadAllSeparate}
-                    className="text-[#C5A059] hover:underline flex items-center space-x-1 font-bold text-[11px]"
+                    className="text-[#C5A059] hover:underline flex items-center space-x-1 font-medium text-xs"
                   >
                     <PackageCheck className="w-3.5 h-3.5" />
                     <span>Unduh Semua Terpisah</span>
@@ -208,22 +217,22 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
                     <button
                       key={track.voice}
                       onClick={() => handleDownloadVoice(track.voice, track.name)}
-                      className="flex items-center justify-between p-3 rounded bg-[#141414] hover:bg-[#1A1A1A] border border-[#222] hover:border-[#C5A059] text-left transition group"
+                      className="flex items-center justify-between p-3 rounded-lg bg-[#141519] hover:bg-[#1E2026] text-left transition group active:scale-[0.98]"
                     >
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold font-mono text-xs px-2 py-0.5 rounded bg-[#1E1E1E] text-[#C5A059] border border-[#333]">
+                      <div className="flex items-center space-x-2.5">
+                        <span className="font-bold text-xs px-2 py-0.5 rounded bg-[#20222A] text-[#C5A059]">
                           {track.voice}
                         </span>
                         <div>
-                          <div className="text-xs font-semibold text-[#E0E0E0]">
+                          <div className="text-xs font-medium text-[#E5E7EB]">
                             {track.name} Saja
                           </div>
-                          <div className="text-[10px] text-[#707070] font-mono">
+                          <div className="text-xs text-[#9CA3AF] tabular-nums">
                             {track.notes.filter((n) => !n.pitch.isRest).length} notasi
                           </div>
                         </div>
                       </div>
-                      <Download className="w-4 h-4 text-[#707070] group-hover:text-[#C5A059] transition" />
+                      <Download className="w-4 h-4 text-[#9CA3AF] group-hover:text-[#C5A059] transition-colors" />
                     </button>
                   ))}
                 </div>
@@ -233,7 +242,7 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
 
           {/* Success Notification Alert */}
           {downloadSuccess && (
-            <div className="p-3 bg-[#112211] border border-emerald-500/40 rounded text-xs text-emerald-300 flex items-center space-x-2">
+            <div className="p-3 bg-[#132B1A] rounded-lg text-xs text-emerald-300 flex items-center space-x-2">
               <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
               <span>{downloadSuccess}</span>
             </div>
@@ -241,10 +250,10 @@ export const MidiExportModal: React.FC<MidiExportModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-3 border-t border-[#222] bg-[#0A0A0A] flex justify-end">
+        <div className="px-6 py-4 bg-[#0A0A0A] flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-[#1A1A1A] hover:bg-[#262626] text-[#E0E0E0] text-xs font-bold rounded transition"
+            className="px-4 py-2 bg-[#1A1B20] hover:bg-[#22242B] text-[#E5E7EB] text-xs font-medium rounded-md transition-colors active:scale-[0.98]"
           >
             Tutup
           </button>

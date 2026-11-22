@@ -1,14 +1,22 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { EditorSection } from './components/EditorSection';
 import { AudioPlayerBar } from './components/AudioPlayerBar';
 import { ParsedVisualizer } from './components/ParsedVisualizer';
-import { MidiExportModal } from './components/MidiExportModal';
-import { CheatsheetModal } from './components/CheatsheetModal';
-import { NoteGeneratorModal } from './components/NoteGeneratorModal';
-import { parseParnumation, DEFAULT_METADATA } from './lib/parser';
+import { parseParnumation } from './lib/parser';
 import { PRESET_SONGS } from './lib/presets';
-import { PresetSong, SongMetadata, SATBVoice } from './types';
+import { PresetSong, SongMetadata } from './types';
+
+// Lazy-load heavier modal components on-demand to optimize bundle splitting
+const MidiExportModal = React.lazy(() =>
+  import('./components/MidiExportModal').then((m) => ({ default: m.MidiExportModal }))
+);
+const CheatsheetModal = React.lazy(() =>
+  import('./components/CheatsheetModal').then((m) => ({ default: m.CheatsheetModal }))
+);
+const NoteGeneratorModal = React.lazy(() =>
+  import('./components/NoteGeneratorModal').then((m) => ({ default: m.NoteGeneratorModal }))
+);
 
 export default function App() {
   const [text, setText] = useState<string>(() => PRESET_SONGS[0].text);
@@ -51,7 +59,7 @@ export default function App() {
   }, [parsedSong]);
 
   return (
-    <div className="min-h-screen bg-[#0D0D0D] text-[#E0E0E0] flex flex-col font-sans selection:bg-[#C5A059] selection:text-black">
+    <div className="min-h-dvh bg-[#0C0D0F] text-[#E5E7EB] flex flex-col font-sans selection:bg-[#C5A059] selection:text-black">
       {/* Top Navigation */}
       <Navbar
         onSelectPreset={handleSelectPreset}
@@ -92,30 +100,38 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#222] bg-[#0A0A0A] py-4 text-center text-xs text-[#707070]">
-        <p className="tracking-wide">
-          PARNUMATION TO MIDI ENGINE &mdash; Notasi Angka QWERTY &bull; Multi-Track SATB &bull; Web Audio Synthesizer
+      <footer className="bg-[#080809] py-5 text-center text-xs text-[#6B7280]">
+        <p className="tracking-normal">
+          Parnumation to MIDI Engine · Notasi Angka QWERTY · Multi-Track SATB · Web Audio Synthesizer
         </p>
       </footer>
 
-      {/* Modals */}
-      <MidiExportModal
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-        song={parsedSong}
-      />
+      {/* Modals loaded lazily on demand */}
+      <Suspense fallback={null}>
+        {isExportModalOpen && (
+          <MidiExportModal
+            isOpen={isExportModalOpen}
+            onClose={() => setIsExportModalOpen(false)}
+            song={parsedSong}
+          />
+        )}
 
-      <CheatsheetModal
-        isOpen={isCheatsheetOpen}
-        onClose={() => setIsCheatsheetOpen(false)}
-      />
+        {isCheatsheetOpen && (
+          <CheatsheetModal
+            isOpen={isCheatsheetOpen}
+            onClose={() => setIsCheatsheetOpen(false)}
+          />
+        )}
 
-      <NoteGeneratorModal
-        isOpen={isNoteGeneratorOpen}
-        onClose={() => setIsNoteGeneratorOpen(false)}
-        currentSongKey={parsedSong.metadata.key}
-        onInsertText={handleInsertText}
-      />
+        {isNoteGeneratorOpen && (
+          <NoteGeneratorModal
+            isOpen={isNoteGeneratorOpen}
+            onClose={() => setIsNoteGeneratorOpen(false)}
+            currentSongKey={parsedSong.metadata.key}
+            onInsertText={handleInsertText}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

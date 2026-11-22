@@ -1,0 +1,74 @@
+# robots.txt for Parnumation to MIDI Converter
+# Block AI training bots and data scrapers, allow standard search engines
+
+# Standard Search Engines (Allowed)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# AI Data Scrapers and LLM Training Crawlers (Blocked)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: AnthropicAI
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+# Default rule for all other crawlers
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ais-dev-pmvdz4g6wwnjux4oiznx3w-28906603340.asia-southeast1.run.app/sitemap.xml

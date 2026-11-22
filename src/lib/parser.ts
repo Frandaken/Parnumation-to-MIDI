@@ -208,10 +208,10 @@ export function getSolfegeSyllable(noteNum: number, accidental: number = 0): str
     7: 'si#',
   };
   const FLAT_NAMES: Record<number, string> = {
-    1: 'do♭',
+    1: 'dob',
     2: 'ra',
     3: 'me',
-    4: 'fa♭',
+    4: 'fab',
     5: 'se',
     6: 'le',
     7: 'sa',

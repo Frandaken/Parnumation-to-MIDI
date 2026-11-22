@@ -1,0 +1,62 @@
+# Parnumation to MIDI Converter
+
+> Konverter dan parser notasi angka (solfège / numbered musical notation) format Parnumation menjadi file Standard MIDI (.mid), dilengkapi dukungan paduan suara SATB 4-suara, transpose tangga nada otomatis, ekstraksi berkas partitur (DOCX, PDF, TXT), validasi visual interaktif (timeline DAW & piano roll), serta synthesizer Web Audio terintegrasi.
+
+## Overview & Capabilities
+Parnumation to MIDI Converter mempermudah komposer, dirigen paduan suara, penyanyi gereja/vokal grup, dan musisi mengonversi naskah not angka ke format MIDI berkualitas tinggi tanpa harus mengetik ulang satu per satu di software DAW kompleks.
+
+- **Dukungan SATB Penuh**: Parsing partitur paduan suara 4 suara terpisah — Soprano, Alto, Tenor, Bass — dengan channel MIDI dan instrumen terpisah.
+- **Transposisi Nada Dasar Otomatis**: Mendukung transpose instan ke seluruh tangga nada (C, C#, Db, D, Eb, E, F, F#, Gb, G, Ab, A, Bb, B) dengan konversi solfège ke frekuensi dan MIDI pitch semitone yang akurat.
+- **Ekstraksi Berkas Cerdas**: Menerima upload dokumen DOCX (Microsoft Word), PDF, dan teks biasa (TXT) lalu mengekstrak teks partitur secara otomatis.
+- **Visualizer Interaktif**: Tampilan timeline multi-track bergaya DAW modern untuk memeriksa durasi, artikulasi, ketukan, dan sinkronisasi birama antar-suara.
+- **Synthesizer Web Audio**: Putar preview suara langsung di peramban web dengan kontrol tempo BPM, play/pause, stop, dan penanda birama.
+- **Pemeriksa Kesalahan & Linting**: Mendeteksi peringatan ketukan birama yang tidak seimbang, simbol yang tidak dikenali, atau sintaksis yang salah.
+
+## Format Sintaksis Parnumation
+
+Sintaksis Parnumation menggunakan not angka Indonesia / Asian standard (1-7):
+
+- **Angka Nada**: `1` (Do), `2` (Re), `3` (Mi), `4` (Fa), `5` (Sol), `6` (La), `7` (Si)
+- **Tanda Diam**: `0` (Rest)
+- **Perpanjangan Nada**: Titik `.` memperpanjang nilai nada sebelumnya sebanyak 1 ketukan.
+- **Perubahan Oktaf**:
+  - Titik di atas angka atau tanda kutip / kutip satu / titik atas: oktaf tinggi (`i`, `1'`, `1^`, `2'`, dll.)
+  - Titik di bawah angka atau tanda koma / aksen bawah: oktaf rendah (`1,`, `1_`, `5,`, dll.)
+- **Accidental (Kres / Mol)**:
+  - Sisipan garis miring atau `#` / `b` untuk nada kromatis (misal `1/` = Di / C#, `4/` = Fi / F#, `7\` = Sa / Bb).
+- **Garis Birama**: Karakter pipa vertikal `|` menandai batas birama, dan `||` menandai penutup bait atau lagu.
+- **Tie / Slur**: Busur busur notasi angka (`( 1 2 )` atau garis legato) untuk menyambung atau melagukan lirik.
+- **Header Metadata**:
+  - `Judul: <nama lagu>`
+  - `Nada Dasar: <C/D/E/F/G/A/B>`
+  - `Tempo: <BPM>`
+  - `Birama: <4/4, 3/4, 2/4, 6/8>`
+  - `Suara: S, A, T, B`
+
+## Contoh Format Partitur (SATB)
+
+```text
+Judul: Indonesia Pusaka
+Nada Dasar: F
+Tempo: 84
+Birama: 4/4
+
+[Soprano]
+5 | 3 . 4 5 | 1' . 7 5 | 6 . 5 . | 3 . . 0 ||
+
+[Alto]
+3 | 1 . 2 3 | 5 . 5 3 | 4 . 3 . | 1 . . 0 ||
+
+[Tenor]
+1 | 5 . 6 1' | 3' . 2' 1' | 1' . 1' . | 5 . . 0 ||
+
+[Bass]
+1 | 1 . 1 1 | 1 . 1 1 | 4 . 1 . | 1 . . 0 ||
+```
+
+## Arsitektur Teknis
+- **Frontend**: React 19, TypeScript, Tailwind CSS, Vite.
+- **Audio Engine**: Web Audio API oscillator synth dengan envelope ADSR.
+- **MIDI Engine**: MIDI-Writer-JS untuk membangkitkan file Standard MIDI Type 1 dengan multi-track terisolasi.
+- **Ekstraksi**: Mammoth.js (DOCX extraction) & PDF.js (PDF text stream parsing).
+- **Backend / API**: Express.js proxy & processing server (`/api/extract`, `/api/health`).

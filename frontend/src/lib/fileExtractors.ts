@@ -1,12 +1,3 @@
-import mammoth from 'mammoth';
-import * as pdfjsLib from 'pdfjs-dist';
-
-// Configure pdfjs worker if available in browser
-if (typeof window !== 'undefined' && 'Worker' in window) {
-  // Use unpkg or cdnjs worker fallback for pdfjs in browser bundle
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version || '3.11.174'}/pdf.worker.min.js`;
-}
-
 export interface ExtractedFileResult {
   filename: string;
   text: string;
@@ -15,18 +6,26 @@ export interface ExtractedFileResult {
 }
 
 /**
- * Extracts plain text from DOCX file using mammoth.js
+ * Extracts plain text from DOCX file using on-demand mammoth.js import
  */
 export async function extractTextFromDocx(file: File): Promise<string> {
+  const mammoth = await import('mammoth');
   const arrayBuffer = await file.arrayBuffer();
   const result = await mammoth.extractRawText({ arrayBuffer });
   return result.value.trim();
 }
 
 /**
- * Extracts plain text from text-based PDF file using pdf.js
+ * Extracts plain text from text-based PDF file using on-demand pdf.js import
  */
 export async function extractTextFromPdf(file: File): Promise<string> {
+  const pdfjsLib = await import('pdfjs-dist');
+
+  // Configure pdfjs worker if available in browser
+  if (typeof window !== 'undefined' && 'Worker' in window && !pdfjsLib.GlobalWorkerOptions.workerSrc) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version || '3.11.174'}/pdf.worker.min.js`;
+  }
+
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
   const pdf = await loadingTask.promise;
